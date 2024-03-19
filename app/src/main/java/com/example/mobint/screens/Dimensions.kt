@@ -15,5 +15,6 @@ object Dimensions {
     var margin2: Dp = 8.dp
     var margin22: Dp = 48.dp
     var logoSize: Dp = 48.dp
+    var iconSize: Dp = 20.dp
     var sizePreloader: Dp = 40.dp
 }

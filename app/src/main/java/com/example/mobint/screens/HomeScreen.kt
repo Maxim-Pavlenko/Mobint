@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -21,18 +24,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
 import com.example.mobint.R
 import com.example.mobint.ui.theme.Black
 import com.example.mobint.ui.theme.Blue
@@ -48,8 +51,11 @@ fun HomeScreen() {
             text1 = 16.sp
             text2 = 10.sp
             text22 = 12.sp
+            text3 = 8.sp
             margin1 = 12.dp
             margin2 = 6.dp
+            margin22 = 34.dp
+            iconSize = 12.dp
             sizePreloader = 32.dp
         }
     }
@@ -117,10 +123,14 @@ fun CompanyCard() {
             .fillMaxWidth()
             .padding(Dimensions.margin1)
     ) {
-        Column {
+        Column(
+            modifier = Modifier
+                .padding(Dimensions.margin1)
+        ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
+                    .padding(bottom = Dimensions.margin2)
                     .fillMaxWidth()
             ) {
                 Text(
@@ -131,7 +141,6 @@ fun CompanyCard() {
                     color = Black,
                     modifier = Modifier
                         .weight(1f)
-                        .padding(start = Dimensions.margin1)
                 )
                 Image(
                     painter = painterResource(id = R.drawable.ic_splash),
@@ -141,6 +150,14 @@ fun CompanyCard() {
                         .size(80.dp)
                 )
             }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .size(1.dp)
+                    .background(LightGrey)
+            )
+
             Row(
                 modifier = Modifier
                     .padding(top = Dimensions.margin1)
@@ -150,9 +167,7 @@ fun CompanyCard() {
                     fontSize = Dimensions.text0,
                     text = "200",
                     textAlign = TextAlign.Start,
-                    color = Black,
-                    modifier = Modifier
-                        .padding(start = Dimensions.margin1)
+                    color = Black
                 )
                 Text(
                     fontFamily = FontFamily(Font(R.font.segoe)),
@@ -163,7 +178,99 @@ fun CompanyCard() {
                         .align(Alignment.Bottom)
                         .padding(start = Dimensions.margin2)
                 )
+            }
 
+            Row(
+                modifier = Modifier
+                    .padding(top = Dimensions.margin1)
+            ) {
+                Column {
+                    Text(
+                        fontFamily = FontFamily(Font(R.font.segoe)),
+                        fontSize = Dimensions.text3,
+                        text = "Кешбэк",
+                        color = Gray,
+                        textAlign = TextAlign.Start,
+                    )
+                    Text(
+                        fontFamily = FontFamily(Font(R.font.segoe)),
+                        fontSize = Dimensions.text2,
+                        text = "1%",
+                        color = Black,
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier
+                            .padding(top = Dimensions.margin2)
+                    )
+                }
+
+                Column(
+                    modifier = Modifier
+                        .padding(
+                            start = Dimensions.margin22,
+                            bottom = Dimensions.margin2)
+                ) {
+                    Text(
+                        fontFamily = FontFamily(Font(R.font.segoe)),
+                        fontSize = Dimensions.text3,
+                        text = "Уровень",
+                        textAlign = TextAlign.Start,
+                        color = Gray
+                    )
+                    Text(
+                        fontFamily = FontFamily(Font(R.font.segoe)),
+                        fontSize = Dimensions.text2,
+                        text = "Базовый уровень тест",
+                        textAlign = TextAlign.Start,
+                        color = Black,
+                        modifier = Modifier
+                            .padding(top = Dimensions.margin2)
+                    )
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .size(1.dp)
+                    .background(LightGrey)
+            )
+
+            Row {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_eye),
+                    contentDescription = null,
+                    alignment = Alignment.TopEnd,
+                    colorFilter = ColorFilter.tint(Blue),
+                    modifier = Modifier
+                        .padding(top = Dimensions.margin1)
+                        .align(Alignment.CenterVertically)
+                        .size(Dimensions.iconSize)
+                )
+                Spacer(modifier = Modifier.width(Dimensions.margin22)) // Расстояние в 44dp между изображениями
+                Image(
+                    painter = painterResource(id = R.drawable.ic_trash),
+                    contentDescription = null,
+                    alignment = Alignment.TopEnd,
+                    colorFilter = ColorFilter.tint(Red),
+                    modifier = Modifier
+                        .padding(top = Dimensions.margin1)
+                        .align(Alignment.CenterVertically)
+                        .size(Dimensions.iconSize)
+                )
+                Spacer(modifier = Modifier.width(Dimensions.margin22))
+                Button(
+                    onClick = { /*TODO*/ },
+                    colors = ButtonDefaults.buttonColors(containerColor = LightGrey, contentColor = Blue),
+                    shape = RoundedCornerShape(25),
+                    modifier = Modifier
+                        .padding(top = Dimensions.margin2)
+                        .weight(1f)
+                ){
+                    Text(
+                        fontFamily = FontFamily(Font(R.font.segoe)),
+                        fontSize = Dimensions.text2,
+                        text = "Подробнее"
+                    )
+                }
             }
         }
     }
