@@ -127,29 +127,7 @@ fun CompanyCard() {
             modifier = Modifier
                 .padding(Dimensions.margin1)
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(bottom = Dimensions.margin2)
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    fontFamily = FontFamily(Font(R.font.segoe)),
-                    fontSize = Dimensions.text1,
-                    text = "Bonus Money",
-                    textAlign = TextAlign.Start,
-                    color = Black,
-                    modifier = Modifier
-                        .weight(1f)
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.ic_splash),
-                    contentDescription = null,
-                    alignment = Alignment.TopEnd,
-                    modifier = Modifier
-                        .size(80.dp)
-                )
-            }
+            HeadCard()
 
             Box(
                 modifier = Modifier
@@ -158,75 +136,8 @@ fun CompanyCard() {
                     .background(LightGrey)
             )
 
-            Row(
-                modifier = Modifier
-                    .padding(top = Dimensions.margin1)
-            ) {
-                Text(
-                    fontFamily = FontFamily(Font(R.font.segoe)),
-                    fontSize = Dimensions.text0,
-                    text = "200",
-                    textAlign = TextAlign.Start,
-                    color = Black
-                )
-                Text(
-                    fontFamily = FontFamily(Font(R.font.segoe)),
-                    fontSize = Dimensions.text22,
-                    text = "баллов",
-                    color = Gray,
-                    modifier = Modifier
-                        .align(Alignment.Bottom)
-                        .padding(start = Dimensions.margin2)
-                )
-            }
+            MiddleCard()
 
-            Row(
-                modifier = Modifier
-                    .padding(top = Dimensions.margin1)
-            ) {
-                Column {
-                    Text(
-                        fontFamily = FontFamily(Font(R.font.segoe)),
-                        fontSize = Dimensions.text3,
-                        text = "Кешбэк",
-                        color = Gray,
-                        textAlign = TextAlign.Start,
-                    )
-                    Text(
-                        fontFamily = FontFamily(Font(R.font.segoe)),
-                        fontSize = Dimensions.text2,
-                        text = "1%",
-                        color = Black,
-                        textAlign = TextAlign.Start,
-                        modifier = Modifier
-                            .padding(top = Dimensions.margin2)
-                    )
-                }
-
-                Column(
-                    modifier = Modifier
-                        .padding(
-                            start = Dimensions.margin22,
-                            bottom = Dimensions.margin2)
-                ) {
-                    Text(
-                        fontFamily = FontFamily(Font(R.font.segoe)),
-                        fontSize = Dimensions.text3,
-                        text = "Уровень",
-                        textAlign = TextAlign.Start,
-                        color = Gray
-                    )
-                    Text(
-                        fontFamily = FontFamily(Font(R.font.segoe)),
-                        fontSize = Dimensions.text2,
-                        text = "Базовый уровень тест",
-                        textAlign = TextAlign.Start,
-                        color = Black,
-                        modifier = Modifier
-                            .padding(top = Dimensions.margin2)
-                    )
-                }
-            }
             Box(
                 modifier = Modifier
                     .fillMaxWidth(1f)
@@ -234,49 +145,156 @@ fun CompanyCard() {
                     .background(LightGrey)
             )
 
-            Row {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_eye),
-                    contentDescription = null,
-                    alignment = Alignment.TopEnd,
-                    colorFilter = ColorFilter.tint(Blue),
-                    modifier = Modifier
-                        .padding(top = Dimensions.margin1)
-                        .align(Alignment.CenterVertically)
-                        .size(Dimensions.iconSize)
-                )
-                Spacer(modifier = Modifier.width(Dimensions.margin22)) // Расстояние в 44dp между изображениями
-                Image(
-                    painter = painterResource(id = R.drawable.ic_trash),
-                    contentDescription = null,
-                    alignment = Alignment.TopEnd,
-                    colorFilter = ColorFilter.tint(Red),
-                    modifier = Modifier
-                        .padding(top = Dimensions.margin1)
-                        .align(Alignment.CenterVertically)
-                        .size(Dimensions.iconSize)
-                )
-                Spacer(modifier = Modifier.width(Dimensions.margin22))
-                Button(
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(containerColor = LightGrey, contentColor = Blue),
-                    shape = RoundedCornerShape(25),
-                    modifier = Modifier
-                        .padding(top = Dimensions.margin2)
-                        .weight(1f)
-                ){
-                    Text(
-                        fontFamily = FontFamily(Font(R.font.segoe)),
-                        fontSize = Dimensions.text2,
-                        text = "Подробнее"
-                    )
-                }
-            }
+            ButtomCard()
         }
     }
 }
+
+@Composable
+private fun ButtomCard() {
+    Row {
+        Image(
+            painter = painterResource(id = R.drawable.ic_eye),
+            contentDescription = null,
+            alignment = Alignment.TopEnd,
+            colorFilter = ColorFilter.tint(Blue),
+            modifier = Modifier
+                .padding(top = Dimensions.margin1)
+                .align(Alignment.CenterVertically)
+                .size(Dimensions.iconSize)
+        )
+        Spacer(modifier = Modifier.width(Dimensions.margin22)) // Расстояние в 44dp между изображениями
+        Image(
+            painter = painterResource(id = R.drawable.ic_trash),
+            contentDescription = null,
+            alignment = Alignment.TopEnd,
+            colorFilter = ColorFilter.tint(Red),
+            modifier = Modifier
+                .padding(top = Dimensions.margin1)
+                .align(Alignment.CenterVertically)
+                .size(Dimensions.iconSize)
+        )
+        Spacer(modifier = Modifier.width(Dimensions.margin22))
+        Button(
+            onClick = { /*TODO*/ },
+            colors = ButtonDefaults.buttonColors(containerColor = LightGrey, contentColor = Blue),
+            shape = RoundedCornerShape(25),
+            modifier = Modifier
+                .padding(top = Dimensions.margin2)
+                .weight(1f)
+        ) {
+            Text(
+                fontFamily = FontFamily(Font(R.font.segoe)),
+                fontSize = Dimensions.text2,
+                text = "Подробнее"
+            )
+        }
+    }
+}
+
+@Composable
+private fun MiddleCard() {
+    Row(
+        modifier = Modifier
+            .padding(top = Dimensions.margin1)
+    ) {
+        Text(
+            fontFamily = FontFamily(Font(R.font.segoe)),
+            fontSize = Dimensions.text0,
+            text = "200",
+            textAlign = TextAlign.Start,
+            color = Black
+        )
+        Text(
+            fontFamily = FontFamily(Font(R.font.segoe)),
+            fontSize = Dimensions.text22,
+            text = "баллов",
+            color = Gray,
+            modifier = Modifier
+                .align(Alignment.Bottom)
+                .padding(start = Dimensions.margin2)
+        )
+    }
+
+    Row(
+        modifier = Modifier
+            .padding(top = Dimensions.margin1)
+    ) {
+        Column {
+            Text(
+                fontFamily = FontFamily(Font(R.font.segoe)),
+                fontSize = Dimensions.text3,
+                text = "Кешбэк",
+                color = Gray,
+                textAlign = TextAlign.Start,
+            )
+            Text(
+                fontFamily = FontFamily(Font(R.font.segoe)),
+                fontSize = Dimensions.text2,
+                text = "1%",
+                color = Black,
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .padding(top = Dimensions.margin2)
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .padding(
+                    start = Dimensions.margin22,
+                    bottom = Dimensions.margin2
+                )
+        ) {
+            Text(
+                fontFamily = FontFamily(Font(R.font.segoe)),
+                fontSize = Dimensions.text3,
+                text = "Уровень",
+                textAlign = TextAlign.Start,
+                color = Gray
+            )
+            Text(
+                fontFamily = FontFamily(Font(R.font.segoe)),
+                fontSize = Dimensions.text2,
+                text = "Базовый уровень тест",
+                textAlign = TextAlign.Start,
+                color = Black,
+                modifier = Modifier
+                    .padding(top = Dimensions.margin2)
+            )
+        }
+    }
+}
+
+@Composable
+private fun HeadCard() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .padding(bottom = Dimensions.margin2)
+            .fillMaxWidth()
+    ) {
+        Text(
+            fontFamily = FontFamily(Font(R.font.segoe)),
+            fontSize = Dimensions.text1,
+            text = "Bonus Money",
+            textAlign = TextAlign.Start,
+            color = Black,
+            modifier = Modifier
+                .weight(1f)
+        )
+        Image(
+            painter = painterResource(id = R.drawable.ic_splash),
+            contentDescription = null,
+            alignment = Alignment.TopEnd,
+            modifier = Modifier
+                .size(80.dp)
+        )
+    }
+}
+
 @Preview(showSystemUi = true)
 @Composable
 fun Preview() {
-    CompanyCard()
+    HomeScreen()
 }
