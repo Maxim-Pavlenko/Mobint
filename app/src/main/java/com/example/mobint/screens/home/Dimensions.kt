@@ -1,4 +1,4 @@
-package com.example.mobint.screens
+package com.example.mobint.screens.home
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit

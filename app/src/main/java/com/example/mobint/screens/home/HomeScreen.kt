@@ -1,4 +1,4 @@
-package com.example.mobint.screens
+package com.example.mobint.screens.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,6 +20,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +28,6 @@ import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -43,7 +43,13 @@ import com.example.mobint.ui.theme.LightGrey
 
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    //homeViewModel: HomeViewModel = hiltViewModel()
+) {
+    /*LaunchedEffect(key1 = Unit) {
+        homeViewModel.getAllCompanies()
+    }*/
+
     // Определяем плотность экрана
     if (LocalConfiguration.current.densityDpi <= 240) {
         Dimensions.apply {
@@ -59,6 +65,7 @@ fun HomeScreen() {
             sizePreloader = 32.dp
         }
     }
+
     Surface (
         color = LightGrey
     ) {

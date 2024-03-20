@@ -2,7 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id ("kotlin-kapt")
-    id ("com.google.dagger.hilt.android")
     id ("kotlin-parcelize")
 }
 
@@ -69,15 +68,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-
     //Compose Navigation
     implementation("androidx.navigation:navigation-compose: 2.6.0")
-
-    //Dagger Hilt
-    implementation("com.google.dagger:hilt-android:2.50")
-    kapt("com.google.dagger:hilt-compiler:2.45")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -98,4 +90,9 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+
+    // Koin
+    implementation("io.insert-koin:koin-android:3.2.2")
+    implementation("io.insert-koin:koin-core:3.2.2")
+    testImplementation("io.insert-koin:koin-test:3.2.2")
 }
