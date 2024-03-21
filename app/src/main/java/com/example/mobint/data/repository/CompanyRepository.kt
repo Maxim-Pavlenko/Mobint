@@ -8,6 +8,7 @@ import com.example.mobint.entities.BodyRequest
 import com.example.mobint.entities.CompanyResponse
 import com.example.mobint.util.Constants.ITEMS_PER_PAGE
 import com.google.gson.Gson
+import com.google.gson.JsonPrimitive
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.util.concurrent.Flow
@@ -15,7 +16,6 @@ import java.util.concurrent.Flow
 class CompanyRepository(
     private val companyDataBase: CompanyDataBase
 ) {
-
 
     /*suspend fun getAllCompanies(): CompanyResponse? {
         kotlin.runCatching {

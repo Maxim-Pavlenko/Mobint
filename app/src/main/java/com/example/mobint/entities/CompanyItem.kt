@@ -13,7 +13,7 @@ data class CompanyItem(
     @Embedded(prefix = "company_")
     val company: Company,
     @Embedded(prefix = "customerMarkParameters_")
-    val customerMarkParameters: LoyaltyLevel? = null,
+    val customerMarkParameters: CustomerMarkParameters? = null,
     @Embedded(prefix = "mobileAppDashboard_")
     val mobileAppDashboard: MobileAppDashboard? = null
 )

@@ -5,18 +5,16 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 object RetrofitInstance {
-    private val interceptor = HttpLoggingInterceptor().also {
-        it.level = HttpLoggingInterceptor.Level.BODY
-    }
-    private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
-
-    private val retrofit = Retrofit.Builder()
+    val retrofit = Retrofit
+        .Builder()
+        .client(
+            OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().also {
+                it.level = HttpLoggingInterceptor.Level.BODY
+            }).build()
+        )
         .baseUrl(BASE_URL)
-        .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-
-    val companyAPI = retrofit.create(CompanyApi::class.java)
+        .create(CompanyService::class.java)
 }

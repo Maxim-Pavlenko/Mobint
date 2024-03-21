@@ -1,5 +1,6 @@
 package com.example.mobint.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,9 +24,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Gray
@@ -40,11 +38,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.mobint.R
+import com.example.mobint.entities.CompanyItem
+import com.example.mobint.entities.LoyaltyLevel
+import com.example.mobint.entities.MobileAppDashboard
 import com.example.mobint.ui.theme.Black
 import com.example.mobint.ui.theme.Blue
 import com.example.mobint.ui.theme.LightGrey
-import com.example.mobint.util.State
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -52,11 +54,11 @@ import org.koin.androidx.compose.koinViewModel
 fun HomeScreen(
     homeViewModel: HomeViewModel = koinViewModel()
 ) {
-    LaunchedEffect(key1 = Unit) {
-        homeViewModel.getAllCompanies()
-    }
-    conditionScreenDensity()
-    val state by homeViewModel.state.collectAsState()
+    ConditionScreenDensity()
+    val companyList = homeViewModel.getFlow().collectAsLazyPagingItems()
+    ListCompany(companyList)
+
+    /*val state by homeViewModel.state.collectAsState()
 
     when(state) {
         State.Load -> {
@@ -68,14 +70,24 @@ fun HomeScreen(
         State.Success -> {
 
         }
-    }
+    }*/
+}
 
+@Composable
+private fun ListCompany(companyList: LazyPagingItems<CompanyItem>) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(all = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-
+        items(
+            count = companyList.itemCount
+        ) { index ->
+            val company = companyList[index]
+            company?.let { item ->
+                CompanyCard(item)
+            }
+        }
     }
 }
 
@@ -127,7 +139,7 @@ private fun CircularProgressIndicator() {
 }
 
 @Composable
-private fun conditionScreenDensity() {
+private fun ConditionScreenDensity() {
     // Определяем плотность экрана
     if (LocalConfiguration.current.densityDpi <= 240) {
         Dimensions.apply {
@@ -146,7 +158,7 @@ private fun conditionScreenDensity() {
 }
 
 @Composable
-fun CompanyCard() {
+fun CompanyCard(item: CompanyItem) {
     Card(
         colors = CardDefaults.cardColors(
             containerColor = White,
@@ -160,7 +172,8 @@ fun CompanyCard() {
             modifier = Modifier
                 .padding(Dimensions.margin1)
         ) {
-            HeadCard()
+            Log.d("ТУТ","${item.mobileAppDashboard}")
+            HeadCard(item.mobileAppDashboard)
 
             Box(
                 modifier = Modifier
@@ -169,7 +182,8 @@ fun CompanyCard() {
                     .background(LightGrey)
             )
 
-            MiddleCard()
+            Log.d("ТУТ","${item.customerMarkParameters}")
+            MiddleCard(item.customerMarkParameters?.loyaltyLevel)
 
             Box(
                 modifier = Modifier
@@ -226,7 +240,7 @@ private fun ButtomCard() {
 }
 
 @Composable
-private fun MiddleCard() {
+private fun MiddleCard(customerMarkParameters: LoyaltyLevel?) {
     Row(
         modifier = Modifier
             .padding(top = Dimensions.margin1)
@@ -234,7 +248,7 @@ private fun MiddleCard() {
         Text(
             fontFamily = FontFamily(Font(R.font.segoe)),
             fontSize = Dimensions.text0,
-            text = "200",
+            text = "${customerMarkParameters?.requiredSum ?: ""}",
             textAlign = TextAlign.Start,
             color = Black
         )
@@ -264,7 +278,7 @@ private fun MiddleCard() {
             Text(
                 fontFamily = FontFamily(Font(R.font.segoe)),
                 fontSize = Dimensions.text2,
-                text = "1%",
+                text = "${customerMarkParameters?.cashToMark ?: ""}",
                 color = Black,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
@@ -289,7 +303,7 @@ private fun MiddleCard() {
             Text(
                 fontFamily = FontFamily(Font(R.font.segoe)),
                 fontSize = Dimensions.text2,
-                text = "Базовый уровень тест",
+                text = customerMarkParameters?.name ?: "",
                 textAlign = TextAlign.Start,
                 color = Black,
                 modifier = Modifier
@@ -300,7 +314,7 @@ private fun MiddleCard() {
 }
 
 @Composable
-private fun HeadCard() {
+private fun HeadCard(mobileAppDashboard: MobileAppDashboard?) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -310,7 +324,7 @@ private fun HeadCard() {
         Text(
             fontFamily = FontFamily(Font(R.font.segoe)),
             fontSize = Dimensions.text1,
-            text = "Bonus Money",
+            text = mobileAppDashboard?.companyName ?: "",
             textAlign = TextAlign.Start,
             color = Black,
             modifier = Modifier

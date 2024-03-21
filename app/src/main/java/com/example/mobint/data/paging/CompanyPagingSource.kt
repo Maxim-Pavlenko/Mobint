@@ -1,9 +1,9 @@
 package com.example.mobint.data.paging
 
-import android.net.http.HttpException
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.mobint.data.remote.CompanyApi
+import com.example.mobint.data.remote.CompanyService
+import com.example.mobint.data.remote.RetrofitInstance
 import com.example.mobint.entities.BodyRequest
 import com.example.mobint.entities.CompanyItem
 import com.example.mobint.util.Constants.MAX_PAGE_SIZE
@@ -13,10 +13,12 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 class CompanyPagingSource(
-    private val companyApi: CompanyApi,
+    private val companyService: CompanyService
 ): PagingSource<Int, CompanyItem>() {
     override fun getRefreshKey(state: PagingState<Int, CompanyItem>): Int? {
-        TODO("Not yet implemented")
+        val anchorPosition = state.anchorPosition ?: return null
+        val page = state.closestPageToPosition(anchorPosition) ?: return null
+        return page.prevKey?.plus(1) ?: page.nextKey?.minus(1)
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CompanyItem> {
@@ -24,7 +26,7 @@ class CompanyPagingSource(
         val pageSize: Int = params.loadSize.coerceAtMost(MAX_PAGE_SIZE)
         val requestBody = createBody(page, pageSize)
         kotlin.runCatching {
-            companyApi.getAllCompanies(body = requestBody)
+            companyService.getAllCompanies(body = requestBody)
         }.fold(
             onSuccess = {
                 val nextKey = if (it.companies.size < pageSize) null else page + 1
