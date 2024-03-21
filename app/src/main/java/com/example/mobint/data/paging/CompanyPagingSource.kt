@@ -1,10 +1,12 @@
 package com.example.mobint.data.paging
 
+import android.net.http.HttpException
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.mobint.data.remote.CompanyApi
 import com.example.mobint.entities.BodyRequest
 import com.example.mobint.entities.CompanyItem
+import com.example.mobint.util.Constants.MAX_PAGE_SIZE
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
@@ -19,9 +21,20 @@ class CompanyPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CompanyItem> {
         val page: Int = params.key ?: 1
-        val pageSize: Int = params.loadSize
+        val pageSize: Int = params.loadSize.coerceAtMost(MAX_PAGE_SIZE)
         val requestBody = createBody(page, pageSize)
-        companyApi.getAllCompanies()
+        kotlin.runCatching {
+            companyApi.getAllCompanies(body = requestBody)
+        }.fold(
+            onSuccess = {
+                val nextKey = if (it.companies.size < pageSize) null else page + 1
+                val prevKey = if (page == 1) null else page - 1
+                return LoadResult.Page(it.companies, prevKey, nextKey)
+            },
+            onFailure = {
+                return LoadResult.Error(it)
+            }
+        )
     }
 
     private fun createBody(page: Int, size: Int): RequestBody {
