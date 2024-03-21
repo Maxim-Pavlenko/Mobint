@@ -1,21 +1,29 @@
 package com.example.mobint.data.repository
 
-import android.util.Log
-import com.example.mobint.data.remote.RetrofitInstance
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.example.mobint.data.local.CompanyDataBase
 import com.example.mobint.entities.BodyRequest
 import com.example.mobint.entities.CompanyResponse
+import com.example.mobint.util.Constants.ITEMS_PER_PAGE
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.util.concurrent.Flow
 
-class CompanyRepository() {
-    val request = BodyRequest(offset = 0, limit = 5)
-    val requestBody = Gson().toJson(request).toRequestBody("application/json".toMediaType())
-    suspend fun getAllCompanies(): CompanyResponse? {
+class CompanyRepository(
+    private val companyDataBase: CompanyDataBase
+) {
+
+
+    /*suspend fun getAllCompanies(): CompanyResponse? {
         kotlin.runCatching {
             RetrofitInstance.companyAPI.getAllCompanies(body = requestBody)
         }.fold(
             onSuccess = {
+                Log.d("DATA", "ТУТ")
+                db.companyDao().addCompany(it.companies.filter { it.company.companyId != null })
                 return it
             },
             onFailure = {
@@ -23,5 +31,9 @@ class CompanyRepository() {
                 return null
             }
         )
+    }*/
+
+    fun getAllCompanies() {
+
     }
 }

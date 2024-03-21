@@ -69,7 +69,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     //Compose Navigation
-    implementation("androidx.navigation:navigation-compose: 2.6.0")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -88,11 +88,23 @@ dependencies {
 
     //Room
     implementation("androidx.room:room-runtime:2.6.1")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+
+    // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:2.6.1")
+
+    // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:2.6.1")
+
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation("androidx.room:room-guava:2.6.1")
+
+    // optional - Paging 3 Integration
+    implementation("androidx.room:room-paging:2.6.1")
 
     // Koin
     implementation("io.insert-koin:koin-android:3.2.2")
     implementation("io.insert-koin:koin-core:3.2.2")
     testImplementation("io.insert-koin:koin-test:3.2.2")
+    implementation("io.insert-koin:koin-androidx-compose:3.2.2")
 }

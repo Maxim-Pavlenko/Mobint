@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobint.data.repository.CompanyRepository
 import com.example.mobint.entities.CompanyResponse
+import com.example.mobint.util.State
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel (
@@ -15,10 +19,14 @@ class HomeViewModel (
     private val _cardData = MutableLiveData<CompanyResponse?>()
     val cardData: LiveData<CompanyResponse?> = _cardData
 
+    private val _state: MutableStateFlow<State> = MutableStateFlow(State.Load)
+    val state: StateFlow<State> = _state.asStateFlow()
+
     fun getAllCompanies() {
         viewModelScope.launch {
-            _cardData.value = companyRepository.getAllCompanies()
-            Log.d("DATA", "${_cardData.value}")
+            _state.value = State.Load
+            companyRepository.getAllCompanies()
+            _state.value = State.Success
         }
     }
 }

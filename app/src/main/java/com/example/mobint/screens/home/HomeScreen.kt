@@ -5,12 +5,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -21,9 +24,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.White
@@ -40,33 +44,44 @@ import com.example.mobint.R
 import com.example.mobint.ui.theme.Black
 import com.example.mobint.ui.theme.Blue
 import com.example.mobint.ui.theme.LightGrey
+import com.example.mobint.util.State
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun HomeScreen(
-    //homeViewModel: HomeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = koinViewModel()
 ) {
-    /*LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(key1 = Unit) {
         homeViewModel.getAllCompanies()
-    }*/
+    }
+    conditionScreenDensity()
+    val state by homeViewModel.state.collectAsState()
 
-    // Определяем плотность экрана
-    if (LocalConfiguration.current.densityDpi <= 240) {
-        Dimensions.apply {
-            text0 = 20.sp
-            text1 = 16.sp
-            text2 = 10.sp
-            text22 = 12.sp
-            text3 = 8.sp
-            margin1 = 12.dp
-            margin2 = 6.dp
-            margin22 = 34.dp
-            iconSize = 12.dp
-            sizePreloader = 32.dp
+    when(state) {
+        State.Load -> {
+            CircularProgressIndicator()
+        }
+        State.Error -> {
+
+        }
+        State.Success -> {
+
         }
     }
 
-    Surface (
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(all = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+
+    }
+}
+
+@Composable
+private fun CircularProgressIndicator() {
+    Surface(
         color = LightGrey
     ) {
         Column(
@@ -75,7 +90,7 @@ fun HomeScreen(
             Box(
                 modifier = Modifier
                     .fillMaxWidth(1f)
-                    .background(Color.White)
+                    .background(White)
             ) {
                 Text(
                     fontFamily = FontFamily(Font(R.font.segoe)),
@@ -108,14 +123,25 @@ fun HomeScreen(
                     .padding(top = Dimensions.margin2)
             )
         }
+    }
+}
 
-        /*LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(all = 12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-
-        }*/
+@Composable
+private fun conditionScreenDensity() {
+    // Определяем плотность экрана
+    if (LocalConfiguration.current.densityDpi <= 240) {
+        Dimensions.apply {
+            text0 = 20.sp
+            text1 = 16.sp
+            text2 = 10.sp
+            text22 = 12.sp
+            text3 = 8.sp
+            margin1 = 12.dp
+            margin2 = 6.dp
+            margin22 = 34.dp
+            iconSize = 12.dp
+            sizePreloader = 32.dp
+        }
     }
 }
 
