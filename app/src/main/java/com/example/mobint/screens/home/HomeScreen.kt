@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.White
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import coil.compose.rememberAsyncImagePainter
 import com.example.mobint.R
 import com.example.mobint.entities.CompanyItem
 import com.example.mobint.entities.LoyaltyLevel
@@ -331,10 +333,11 @@ private fun HeadCard(mobileAppDashboard: MobileAppDashboard?) {
                 .weight(1f)
         )
         Image(
-            painter = painterResource(id = R.drawable.ic_splash),
+            painter = rememberAsyncImagePainter(model = mobileAppDashboard?.logo),
             contentDescription = null,
             alignment = Alignment.TopEnd,
             modifier = Modifier
+                .clip(RoundedCornerShape(50.dp))
                 .size(80.dp)
         )
     }

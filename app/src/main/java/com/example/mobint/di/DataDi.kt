@@ -1,5 +1,6 @@
 package com.example.mobint.di
 
+import com.example.mobint.data.paging.CompanyMediator
 import com.example.mobint.data.paging.CompanyPagingSource
 import com.example.mobint.data.remote.CompanyService
 import com.example.mobint.data.remote.RetrofitInstance
@@ -12,19 +13,27 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 val dataModule = module {
+
     single<CompanyService> {
         provideCompanyService()
+    }
+
+    single<CompanyMediator> {
+        CompanyMediator(
+            companyService = get(),
+            companyDataBase = get()
+        )
+    }
+    factory<CompanyPagingSource> {
+        CompanyPagingSource(get())
     }
 
     single<CompanyRepository> {
         CompanyRepository(
             companyDataBase = get(),
-            companyService = get()
+            companyService = get(),
+            companyMediator = get()
         )
-    }
-
-    factory<CompanyPagingSource> {
-        CompanyPagingSource(get())
     }
 }
 

@@ -22,7 +22,7 @@ class HomeViewModel (
     val state: StateFlow<State> = _state.asStateFlow()
 
     fun fetchCompanyItem(): Flow<PagingData<CompanyItem>>{
-        return companyRepository.letCompanyFlow().cachedIn(viewModelScope)
+        return companyRepository.getAllCompany().cachedIn(viewModelScope)
     }
 
     /*fun getAllCompanies() {
