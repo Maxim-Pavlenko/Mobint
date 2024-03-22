@@ -4,36 +4,28 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.mobint.data.local.CompanyDataBase
-import com.example.mobint.entities.BodyRequest
-import com.example.mobint.entities.CompanyResponse
-import com.example.mobint.util.Constants.ITEMS_PER_PAGE
-import com.google.gson.Gson
-import com.google.gson.JsonPrimitive
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.util.concurrent.Flow
+import com.example.mobint.data.paging.CompanyPagingSource
+import com.example.mobint.data.remote.CompanyService
+import com.example.mobint.entities.CompanyItem
+import com.example.mobint.util.Constants.MAX_PAGE_SIZE
+import kotlinx.coroutines.flow.Flow
+
 
 class CompanyRepository(
-    private val companyDataBase: CompanyDataBase
+    private val companyDataBase: CompanyDataBase,
+    private val companyService: CompanyService
 ) {
+    fun letCompanyFlow(pagingConfig: PagingConfig = getPageConfig()): Flow<PagingData<CompanyItem>> {
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = {CompanyPagingSource(companyService)}
+        ).flow
+    }
 
-    /*suspend fun getAllCompanies(): CompanyResponse? {
-        kotlin.runCatching {
-            RetrofitInstance.companyAPI.getAllCompanies(body = requestBody)
-        }.fold(
-            onSuccess = {
-                Log.d("DATA", "ТУТ")
-                db.companyDao().addCompany(it.companies.filter { it.company.companyId != null })
-                return it
-            },
-            onFailure = {
-                Log.d("ERROR", "${it.message}")
-                return null
-            }
+    private fun getPageConfig(): PagingConfig {
+        return PagingConfig(
+            pageSize = MAX_PAGE_SIZE,
+            enablePlaceholders = false
         )
-    }*/
-
-    fun getAllCompanies() {
-
     }
 }

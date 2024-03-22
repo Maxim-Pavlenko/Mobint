@@ -55,7 +55,7 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = koinViewModel()
 ) {
     ConditionScreenDensity()
-    val companyList = homeViewModel.getFlow().collectAsLazyPagingItems()
+    val companyList = homeViewModel.fetchCompanyItem().collectAsLazyPagingItems()
     ListCompany(companyList)
 
     /*val state by homeViewModel.state.collectAsState()

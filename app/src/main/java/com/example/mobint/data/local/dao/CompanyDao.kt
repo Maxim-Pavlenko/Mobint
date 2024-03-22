@@ -13,7 +13,7 @@ interface CompanyDao {
     fun getAllCompany(): PagingSource<Int, CompanyItem>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addCompany(companyItem: List<CompanyItem>)
+    suspend fun insertAll(companyItem: List<CompanyItem>)
 
     @Query("DELETE FROM COMPANY_TABLE")
     suspend fun deleteAllCompany()
