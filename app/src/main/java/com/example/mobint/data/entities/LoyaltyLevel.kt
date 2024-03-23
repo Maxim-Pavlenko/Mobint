@@ -1,4 +1,4 @@
-package com.example.mobint.entities
+package com.example.mobint.data.entities
 
 data class LoyaltyLevel(
     val number: Int? = null,

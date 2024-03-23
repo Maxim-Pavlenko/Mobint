@@ -70,6 +70,8 @@ dependencies {
 
     //Compose Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.4")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -85,6 +87,9 @@ dependencies {
     //Paging 3
     implementation("androidx.paging:paging-runtime:3.2.1")
     implementation("androidx.paging:paging-compose:3.2.1")
+
+    //SwipeRefresh
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.27.0")
 
     //Room
     implementation("androidx.room:room-runtime:2.6.1")

@@ -1,9 +1,7 @@
 package com.example.mobint.di
 
 import com.example.mobint.data.paging.CompanyMediator
-import com.example.mobint.data.paging.CompanyPagingSource
 import com.example.mobint.data.remote.CompanyService
-import com.example.mobint.data.remote.RetrofitInstance
 import com.example.mobint.data.repository.CompanyRepository
 import com.example.mobint.util.Constants
 import okhttp3.OkHttpClient
@@ -24,14 +22,9 @@ val dataModule = module {
             companyDataBase = get()
         )
     }
-    factory<CompanyPagingSource> {
-        CompanyPagingSource(get())
-    }
-
     single<CompanyRepository> {
         CompanyRepository(
             companyDataBase = get(),
-            companyService = get(),
             companyMediator = get()
         )
     }

@@ -5,7 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.mobint.entities.CompanyItem
+import com.example.mobint.data.entities.CompanyItem
 
 @Dao
 interface CompanyDao {

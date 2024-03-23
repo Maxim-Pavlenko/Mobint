@@ -1,4 +1,4 @@
-package com.example.mobint.entities
+package com.example.mobint.data.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

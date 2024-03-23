@@ -6,6 +6,5 @@ object Constants {
     const val COMPANY_TABLE = "company_table"
     const val REMOTE_KEYS = "remote_keys"
     const val DEFAULT_PAGE_INDEX = 1
-    const val ITEMS_PER_PAGE = 10
     const val MAX_PAGE_SIZE = 10
 }

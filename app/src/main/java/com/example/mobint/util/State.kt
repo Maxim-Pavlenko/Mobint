@@ -1,7 +1,9 @@
 package com.example.mobint.util
 
-enum class State {
-    Error,
-    Load,
-    Success
+sealed class State {
+    object Error: State()
+    object Loading: State()
+    object Success: State()
+
+    object Empty: State()
 }

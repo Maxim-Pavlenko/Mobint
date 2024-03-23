@@ -1,4 +1,4 @@
-package com.example.mobint.entities
+package com.example.mobint.data.entities
 
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.mobint.di.Converters
 import com.example.mobint.util.Constants.COMPANY_TABLE
-import com.google.gson.annotations.SerializedName
 
 
 @Entity(tableName = COMPANY_TABLE)

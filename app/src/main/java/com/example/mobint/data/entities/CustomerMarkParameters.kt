@@ -1,4 +1,4 @@
-package com.example.mobint.entities
+package com.example.mobint.data.entities
 
 data class CustomerMarkParameters(
     val loyaltyLevel: LoyaltyLevel? = null,

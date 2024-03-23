@@ -1,13 +1,13 @@
 package com.example.mobint.data.remote
 
-import com.example.mobint.entities.CompanyResponse
+import com.example.mobint.data.entities.CompanyResponse
 import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface CompanyService {
-    @POST("getAllCompaniesIdeal")
+    @POST("getAllCompanies")
     suspend fun getAllCompanies(
         @Header("Content-Type") content: String = "application/json",
         @Header("TOKEN") token: String = "123",

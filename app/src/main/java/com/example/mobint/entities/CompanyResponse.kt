@@ -1,7 +1,0 @@
-package com.example.mobint.entities
-
-data class CompanyResponse(
-    val companies: List<CompanyItem>,
-    val limit: Int,
-    val offset: Int
-)
