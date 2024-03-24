@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,13 +24,13 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.example.mobint.R
 import com.example.mobint.data.entities.CompanyItem
 import com.example.mobint.ui.theme.Blue
 import com.example.mobint.ui.theme.LightGrey
+import com.example.mobint.util.Dimensions
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -46,6 +45,7 @@ fun ListCompany(companyList: LazyPagingItems<CompanyItem>) {
     LaunchedEffect(key1 = companyList.loadState) {
         if (companyList.loadState.refresh is LoadState.Error || companyList.loadState.append is LoadState.Error) {
             isSwipeLoading.value = false
+            isFirstLoad.value = false
             openDialog.value = true
         }
     }
@@ -87,20 +87,27 @@ fun ListCompany(companyList: LazyPagingItems<CompanyItem>) {
 
                             loadState.refresh is LoadState.Loading -> {
                                 Log.d("STATE", "REFRESH _ Loading")
-                                isSwipeLoading.value = true
+                                if (isFirstLoad.value) {
+                                    item {ProgressIndicator(arrangement = Arrangement.Top)}
+                                } else isSwipeLoading.value = true
                             }
                         }
                     }
-                    items(
-                        count = companyList.itemCount
-                    ) { index ->
-                        val company = companyList[index]
-                        isSwipeLoading.value = false
-                        company?.let { item ->
-                            CompanyCard(item)
+
+                    when (companyList.itemCount) {
+                        0 -> {
+                            if (!isFirstLoad.value && !isSwipeLoading.value) item {EmptyView()}
+                        }
+                        else -> items(
+                            count = companyList.itemCount
+                        ) { index ->
+                            val company = companyList[index]
+                            isSwipeLoading.value = false
+                            company?.let { item ->
+                                CompanyCard(item)
+                            }
                         }
                     }
-
                     when (companyList.loadState.append) {
                         is LoadState.Loading -> {
                             Log.d("STATE", "APPEND _ Loading")
@@ -126,7 +133,6 @@ fun ListCompany(companyList: LazyPagingItems<CompanyItem>) {
 
                         else -> {}
                     }
-
                 }
             }
         }

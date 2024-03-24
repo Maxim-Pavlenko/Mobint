@@ -31,12 +31,12 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
 import coil.compose.rememberAsyncImagePainter
 import com.example.mobint.R
 import com.example.mobint.data.entities.CompanyItem
 import com.example.mobint.data.entities.MobileAppDashboard
 import com.example.mobint.ui.theme.LightGrey
+import com.example.mobint.util.Dimensions
 
 
 @Composable

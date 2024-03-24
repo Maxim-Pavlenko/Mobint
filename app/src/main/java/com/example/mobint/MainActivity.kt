@@ -3,6 +3,8 @@ package com.example.mobint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.compose.rememberNavController
+import com.example.mobint.navigation.SetupNavGraph
 import com.example.mobint.screens.home.HomeScreen
 import com.example.mobint.ui.theme.MobintTheme
 
@@ -12,7 +14,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MobintTheme {
-                HomeScreen()
+                val navContreller = rememberNavController()
+                SetupNavGraph(navController = navContreller)
             }
         }
     }

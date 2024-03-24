@@ -17,7 +17,6 @@ import org.koin.androidx.compose.koinViewModel
 fun HomeScreen(
     homeViewModel: HomeViewModel = koinViewModel()
 ) {
-    val firstLoading = remember { mutableStateOf(true) }
     ConditionScreenDensity()
     val companyList = homeViewModel.fetchCompanyItem().collectAsLazyPagingItems()
     ListCompany(companyList)
